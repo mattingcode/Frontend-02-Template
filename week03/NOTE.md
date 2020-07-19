@@ -47,3 +47,39 @@
   - FunctionDeclaration
   - GeneratorDeclaration
   - AsyncFunctionDeclaration
+
+## 宏任务和微任务
+
+- js执行颗粒度，在运行时的表示
+  - 宏任务
+  - 微任务（promise）
+  - 函数调用
+  - 语句/声明（completion record）
+  - 表达式
+  - 直接量/变量/this...
+- 宏观任务
+  - 宿主环境给js引擎一段代码，引擎把代码执行，这个任务就是宿主发起的任务叫宏观任务
+- 微观任务
+  - 在ES5引入promise之后，即在宿主发起执行任务后，由引擎自己发起并执行的任务叫微观任务，在js里面只有Promise会产生微任务
+- 事件循环本身不属于js语言本身的内容
+- 为什么Promise 里的代码比setTimeout先执行
+  - Promise永远往队列尾部添加微观任务
+  - setTImeout等宿主API则会直接添加宏观任务
+
+## 函数调用
+
+- js 每个函数都会生成闭包
+- js里面每个函数都会带一个它定义时的Environment Record,保存在自己对象身上，变成一个属性
+```
+var y = 2;
+function foo2 () {
+console.log(y)
+}
+export foo2
+```
+- 不管foo2会被传到哪里去，都会带上y
+- 闭包分成两个部分
+  - 代码部分
+  - 环境部分
+    - Object
+    - 变量序列
